@@ -2,110 +2,31 @@
 
 import { useEffect, useRef, useState } from "react";
 import { gsap, ScrollTrigger, useGSAP } from "./gsap";
+import {
+  type Lang,
+  type TimelineJob,
+  NAV_ITEMS,
+  UI,
+  HERO_FACTS,
+  ABILITIES,
+  STATS_LABELS,
+  TIMELINE,
+  STACK_CATEGORY_LABELS,
+  PROJECT_DESCRIPTIONS,
+  FILTER_CATS,
+  STEP_NAMES,
+} from "./content";
 
 const NAME = "Nomena Andrianiaina";
 const DEVICON = "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/";
 const SIMPLE_ICONS = "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/";
 
-const HERO_FACTS = [
-  { value: "2+ ans", label: "En production" },
-  { value: "20+", label: "Systèmes livrés" },
-  { value: "p95 < 100ms", label: "Latence API visée" },
-  { value: "0", label: "Interruption au déploiement" },
-];
-
-const ABILITIES = [
-  "Conception d'API — REST versionnées, GraphQL, contrats testés",
-  "Backend — Java / Spring Boot, Node.js, NestJS",
-  "Frontend — React, Next.js, TypeScript strict",
-  "Données — modélisation PostgreSQL, migrations, cache Redis",
-  "Livraison continue — build reproductible, tests, rollback",
-  "Exploitation — Docker, Linux, Nginx, métriques et alertes",
-];
-
-const INITIAL_STATS = [
-  { value: 20, prefix: "+", suffix: "", label: "Projets livrés en production" },
-  { value: 80, prefix: "", suffix: " %", label: "Couverture de tests moyenne" },
-  { value: 100, prefix: "", suffix: " %", label: "Déploiements automatisés" },
-  { value: 6, prefix: "< ", suffix: " min", label: "Du commit à la production" },
-];
-
-const TIMELINE = [
-  {
-    role: "Développeur Full Stack JavaScript",
-    company: "Alfa OI",
-    period: "Mai 2026 — aujourd'hui",
-    summary:
-      "Développement d'applications web métier en JavaScript/TypeScript, de la conception des API à la mise en production.",
-    wins: [
-      "Modules full stack livrés en production sur un cycle de deux semaines",
-      "API REST documentées mutualisées entre plusieurs applications internes",
-      "Déploiements conteneurisés automatisés : mise en ligne ramenée à quelques minutes",
-    ],
-    tech: ["Next.js", "TypeScript", "Node.js", "PostgreSQL", "Docker", "CI/CD"],
-  },
-  {
-    role: "Développeur Full-stack",
-    company: "Webradio.ai — France (télétravail)",
-    period: "Février 2025 — Février 2026",
-    summary:
-      "Applications web pour le secteur des webradios, construites sur une architecture hexagonale modulaire.",
-    wins: [
-      "Architecture hexagonale : ajout de nouveaux modules sans toucher au domaine métier",
-      "API REST optimisées pour les services tiers — temps de réponse divisé par deux sur les endpoints critiques",
-      "Bibliothèque de composants réutilisables et tests unitaires : moins de régressions à chaque release",
-    ],
-    tech: ["Next.js", "Prisma", "MySQL", "REST API", "TypeScript"],
-  },
-  {
-    role: "Développeur Full-stack Java / React",
-    company: "Freelance",
-    period: "Novembre 2024 — Janvier 2025",
-    summary:
-      "Application web et mobile connectée en iBeacon : gestion des utilisateurs, prise de rendez-vous et informations en temps réel.",
-    wins: [
-      "Synchronisation temps réel web ↔ mobile via des services backend centralisés",
-      "Géolocalisation et messagerie instantanée livrées avec Ably, latence sous la seconde",
-      "Projet mené seul de la conception à la mise en production, dans les délais",
-    ],
-    tech: ["Java", "Spring Boot", "React Native", "Next.js", "Ably", "PostgreSQL"],
-  },
-  {
-    role: "Stagiaire Développeur Java / Mobile",
-    company: "Orange Madagascar",
-    period: "Juillet 2024 — Novembre 2024",
-    summary:
-      "Application touristique permettant d'explorer virtuellement les sites, hôtels et parcs de Madagascar.",
-    wins: [
-      "Exploration virtuelle à 360° sur des dizaines de sites référencés",
-      "Recherche géographique servie par PostGIS, résultats quasi instantanés",
-      "Application livrée et présentée à l'équipe métier en fin de stage",
-    ],
-    tech: ["Java", "Spring Boot", "React Native", "PostgreSQL", "PostGIS"],
-  },
-  {
-    role: "Développeur Flutter (bénévole)",
-    company: "ENI",
-    period: "Mai 2024 — Juillet 2024",
-    summary: "Application de gestion de budget et d'éducation financière destinée aux étudiants.",
-    wins: [
-      "Suivi de budget et notifications adoptés par les étudiants de la promotion",
-      "Interfaces accessibles pensées pour un public non technique",
-    ],
-    tech: ["Flutter", "Dart", "Firebase", "SQLite"],
-  },
-  {
-    role: "Stagiaire Développeur Java Spring Boot",
-    company: "Ministère de l'Économie et du Plan",
-    period: "Août 2023 — Novembre 2023",
-    summary:
-      "Plateforme de collaboration, de gestion de tâches et de communication interne au ministère.",
-    wins: [
-      "Découpage en microservices communicant via Feign : déploiement indépendant de chaque module",
-      "API REST robustes ouvrant l'échange de données entre services auparavant cloisonnés",
-    ],
-    tech: ["Java", "Spring Boot", "Feign", "PostgreSQL", "Microservices"],
-  },
+// Language-neutral numeric parts of the animated about-section stats; labels come from STATS_LABELS[lang].
+const STATS_BASE = [
+  { value: 20, prefix: "+", suffix: "" },
+  { value: 80, prefix: "", suffix: " %" },
+  { value: 100, prefix: "", suffix: " %" },
+  { value: 6, prefix: "< ", suffix: " min" },
 ];
 
 const STACK = [
@@ -199,71 +120,44 @@ const STACK = [
 const PROJECTS = [
   {
     title: "GMI",
-    cat: "Personnel",
+    cat: "personal",
     image: "/projects/gm-i.png",
-    desc: "Application de gestion du parc informatique pour entreprises : suivi en temps réel de l'état des équipements, affectation du personnel, demandes de matériel et signalement de maintenance.",
     tags: ["NextAuth", "Next.js", "Java", "Spring Boot", "PostgreSQL"],
     githubLink: "https://github.com/andrianiainafn/gmi_client",
     demoLink: "https://gm-i.vercel.app/",
   },
   {
     title: "Dot Double Zero [.00]",
-    cat: "Hackathon",
+    cat: "hackathon",
     image: "/projects/webcup24.png",
-    desc: "Site pour agents secrets : réception de missions et documents, commande à distance des gadgets et moyens de transport, assistance en temps réel entre coéquipiers via géolocalisation et signal de détresse.",
     tags: ["Tailwind", "Next.js", "Three.js"],
     githubLink: "https://github.com/elita-webcup/elita-webcup",
     demoLink: "https://elita.madagascar.webcup.hodi.host/",
   },
   {
     title: "Chaaat App",
-    cat: "Personnel",
+    cat: "personal",
     image: "/projects/chaaat.png",
-    desc: "Réseau social de messagerie : discuter, partager des moments et rester connecté avec les personnes qui comptent, dans une interface simple et conviviale.",
     tags: ["React", "Node.js", "Express.js", "MongoDB"],
     githubLink: "https://github.com/andrianiainafn/chaat",
     demoLink: "https://chaat-afn.netlify.app/",
   },
   {
     title: "Miray App",
-    cat: "Hackathon",
+    cat: "hackathon",
     image: "/projects/miray.png",
-    desc: "Plateforme de questions-réponses entre étudiants : poser des questions, voter sur les réponses et suivre des sujets ou des utilisateurs pour rester informé.",
     tags: ["Tailwind", "Next.js", "NextAuth"],
     githubLink: "https://github.com/Elita-6/devhunt-client-starter-project",
     demoLink: "https://elita-devhunt.vercel.app/",
   },
   {
     title: "Elita team website",
-    cat: "Équipe",
+    cat: "team",
     image: "/projects/elita-website.png",
-    desc: "Site vitrine d'une agence digitale : de l'idée à la mise en production, présentation des services et du savoir-faire de l'équipe.",
     tags: ["Tailwind", "Next.js"],
     githubLink: "https://github.com/andrianiainafn/CodigoElita_website",
     demoLink: "https://codigoelita.vercel.app/#services",
   },
-];
-
-const FILTER_CATS = ["Tous", "Personnel", "Hackathon", "Équipe"];
-
-const NAV_ITEMS = [
-  { id: "apropos", label: "À propos" },
-  { id: "experience", label: "Expérience" },
-  { id: "stack", label: "Stack" },
-  { id: "projets", label: "Projets" },
-  { id: "process", label: "Process" },
-];
-
-const STEP_NAMES = [
-  "Code",
-  "Git",
-  "Pull Request",
-  "GitHub Actions",
-  "Docker",
-  "Tests",
-  "Déploiement",
-  "Production",
-  "Monitoring",
 ];
 
 const LINKS = [
@@ -271,8 +165,8 @@ const LINKS = [
   { kind: "GitHub", value: "github.com/andrianiainafn", href: "https://github.com/andrianiainafn" },
   {
     kind: "LinkedIn",
-    value: "linkedin.com/in/andrianiaina-fanomezantsoa-nomena",
-    href: "https://www.linkedin.com/in/andrianiaina-fanomezantsoa-nomena",
+    value: "linkedin.com/in/nomena-andrianiaina-09b3a8267",
+    href: "https://www.linkedin.com/in/nomena-andrianiaina-09b3a8267",
   },
   {
     kind: "Portfolio",
@@ -327,13 +221,13 @@ function useReveal<T extends HTMLElement>(delayMs = 0) {
     if (!ref.current) return;
     gsap.from(ref.current, {
       opacity: 0,
-      y: 34,
-      duration: 0.8,
+      y: 20,
+      duration: 0.55,
       delay: delayMs / 1000,
       ease: "power3.out",
       scrollTrigger: {
         trigger: ref.current,
-        start: "top 88%",
+        start: "top 100%",
         toggleActions: "play none none none",
       },
     });
@@ -348,7 +242,7 @@ function useStaggerReveal<T extends HTMLElement>(
   opts: { y?: number; stagger?: number; deps?: unknown[] } = {}
 ) {
   const ref = useRef<T | null>(null);
-  const { y = 20, stagger = 0.06, deps = [] } = opts;
+  const { y = 16, stagger = 0.05, deps = [] } = opts;
 
   useGSAP(
     () => {
@@ -358,12 +252,12 @@ function useStaggerReveal<T extends HTMLElement>(
       gsap.from(items, {
         opacity: 0,
         y,
-        duration: 0.7,
+        duration: 0.5,
         ease: "power3.out",
         stagger,
         scrollTrigger: {
           trigger: ref.current,
-          start: "top 85%",
+          start: "top 100%",
           toggleActions: "play none none none",
         },
       });
@@ -377,12 +271,12 @@ function useStaggerReveal<T extends HTMLElement>(
 
 export default function Home() {
   const [theme, setTheme] = useState<"light" | "dark">("light");
+  const [lang, setLang] = useState<Lang>("fr");
   const [wide, setWide] = useState(false);
-  const [filter, setFilter] = useState("Tous");
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [filter, setFilter] = useState("all");
   const [active, setActive] = useState(0);
-  const [stats, setStats] = useState(
-    INITIAL_STATS.map((s) => ({ ...s, display: "0" }))
-  );
+  const [stats, setStats] = useState(STATS_BASE.map((s) => ({ ...s, display: "0" })));
   const [termLines, setTermLines] = useState<typeof TERMINAL_SRC>([]);
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
@@ -420,9 +314,32 @@ export default function Home() {
     setTheme(next);
   };
 
+  // Language: read persisted preference on mount, falling back to the browser's language.
+  useEffect(() => {
+    const saved = localStorage.getItem("pf-lang") as Lang | null;
+    if (saved === "fr" || saved === "en") {
+      setLang(saved);
+    } else if (navigator.language && !navigator.language.toLowerCase().startsWith("fr")) {
+      setLang("en");
+    }
+  }, []);
+
+  const changeLang = (next: Lang) => {
+    setLang(next);
+    try {
+      localStorage.setItem("pf-lang", next);
+    } catch {}
+  };
+
+  const t = UI[lang];
+
   // Responsive layout switch (nav links, hero terminal panel).
   useEffect(() => {
-    const update = () => setWide(window.innerWidth >= 900);
+    const update = () => {
+      const isWide = window.innerWidth >= 900;
+      setWide(isWide);
+      if (isWide) setMobileMenuOpen(false);
+    };
     update();
     window.addEventListener("resize", update);
     return () => window.removeEventListener("resize", update);
@@ -480,16 +397,16 @@ export default function Home() {
 
     gsap.from(el.querySelectorAll(".pf-stat-card"), {
       opacity: 0,
-      y: 20,
-      duration: 0.7,
+      y: 16,
+      duration: 0.5,
       ease: "power3.out",
-      stagger: 0.08,
-      scrollTrigger: { trigger: el, start: "top 85%", toggleActions: "play none none none" },
+      stagger: 0.06,
+      scrollTrigger: { trigger: el, start: "top 100%", toggleActions: "play none none none" },
     });
 
     ScrollTrigger.create({
       trigger: el,
-      start: "top 85%",
+      start: "top 100%",
       once: true,
       onEnter: () => {
         const progress = { t: 0 };
@@ -499,7 +416,7 @@ export default function Home() {
           ease: "power3.out",
           onUpdate: () => {
             setStats(
-              INITIAL_STATS.map((st) => ({
+              STATS_BASE.map((st) => ({
                 ...st,
                 display: st.prefix + Math.round(st.value * progress.t) + st.suffix,
               }))
@@ -572,7 +489,7 @@ export default function Home() {
 
   // Cycle the "commit to production" process steps.
   useEffect(() => {
-    const tick = setInterval(() => setActive((a) => (a + 1) % STEP_NAMES.length), 950);
+    const tick = setInterval(() => setActive((a) => (a + 1) % STEP_NAMES.fr.length), 950);
     return () => clearInterval(tick);
   }, []);
 
@@ -661,7 +578,7 @@ export default function Home() {
     }, 900);
   };
 
-  const visibleProjects = filter === "Tous" ? PROJECTS : PROJECTS.filter((p) => p.cat === filter);
+  const visibleProjects = filter === "all" ? PROJECTS : PROJECTS.filter((p) => p.cat === filter);
 
   const aboutReveal = useReveal<HTMLDivElement>();
   const aboutTextReveal = useReveal<HTMLDivElement>(80);
@@ -670,8 +587,8 @@ export default function Home() {
   const stackReveal = useReveal<HTMLDivElement>();
   const projectsReveal = useReveal<HTMLDivElement>();
   const projectCardsStagger = useStaggerReveal<HTMLDivElement>(".pf-project-card", {
-    y: 26,
-    stagger: 0.08,
+    y: 18,
+    stagger: 0.06,
     deps: [filter],
   });
   const processReveal = useReveal<HTMLDivElement>();
@@ -721,7 +638,7 @@ export default function Home() {
             color: "var(--tx4)",
           }}
         >
-          Chargement du portfolio
+          {t.preloaderText}
         </div>
         <div
           style={{
@@ -819,10 +736,10 @@ export default function Home() {
           style={{
             maxWidth: 1180,
             margin: "0 auto",
-            padding: "14px 24px",
+            padding: wide ? "14px 24px" : "12px 16px",
             display: "flex",
             alignItems: "center",
-            gap: 28,
+            gap: wide ? 28 : 10,
           }}
         >
           <a
@@ -834,6 +751,7 @@ export default function Home() {
               color: "var(--tx)",
               fontWeight: 700,
               letterSpacing: "-.02em",
+              flex: "none",
             }}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -844,7 +762,7 @@ export default function Home() {
               height={32}
               style={{ width: 32, height: 32, objectFit: "contain", display: "block", filter: "var(--logo-shade)" }}
             />
-            <span style={{ fontSize: 15 }}>{NAME}</span>
+            <span style={{ fontSize: 15, display: wide ? "inline" : "none", whiteSpace: "nowrap" }}>{NAME}</span>
           </a>
           <div style={{ flex: 1 }} />
           <div
@@ -855,7 +773,7 @@ export default function Home() {
               display: wide ? "flex" : "none",
             }}
           >
-            {NAV_ITEMS.map((item) => (
+            {NAV_ITEMS[lang].map((item) => (
               <a
                 key={item.id}
                 href={`#${item.id}`}
@@ -866,11 +784,60 @@ export default function Home() {
               </a>
             ))}
           </div>
+          <div
+            style={{
+              display: wide ? "flex" : "none",
+              gap: 2,
+              padding: 3,
+              border: "1px solid var(--bd2)",
+              borderRadius: 999,
+              background: "var(--surf1)",
+            }}
+          >
+            <button
+              type="button"
+              onClick={() => changeLang("fr")}
+              aria-label={t.langToFr}
+              className={`pf-lang-btn${lang === "fr" ? " is-active" : ""}`}
+            >
+              FR
+            </button>
+            <button
+              type="button"
+              onClick={() => changeLang("en")}
+              aria-label={t.langToEn}
+              className={`pf-lang-btn${lang === "en" ? " is-active" : ""}`}
+            >
+              EN
+            </button>
+          </div>
+          <button
+            type="button"
+            onClick={() => setMobileMenuOpen((v) => !v)}
+            aria-label={mobileMenuOpen ? t.menuClose : t.menuOpen}
+            aria-expanded={mobileMenuOpen}
+            className="pf-theme-btn"
+            style={{
+              display: wide ? "none" : "grid",
+              width: 36,
+              height: 36,
+              flex: "none",
+              placeItems: "center",
+              cursor: "pointer",
+              borderRadius: 10,
+              border: "1px solid var(--bd2)",
+              background: "var(--surf1)",
+              color: "var(--tx2)",
+              fontSize: 16,
+            }}
+          >
+            {mobileMenuOpen ? "✕" : "☰"}
+          </button>
           <button
             type="button"
             onClick={toggleTheme}
-            aria-label={theme === "dark" ? "Passer en thème clair" : "Passer en thème sombre"}
-            title={theme === "dark" ? "Passer en thème clair" : "Passer en thème sombre"}
+            aria-label={theme === "dark" ? t.themeToLight : t.themeToDark}
+            title={theme === "dark" ? t.themeToLight : t.themeToDark}
             className="pf-theme-btn"
             style={{
               width: 36,
@@ -893,17 +860,73 @@ export default function Home() {
             href="#contact"
             className="pf-btn-contact"
             style={{
-              fontSize: 13.5,
+              fontSize: wide ? 13.5 : 12.5,
               fontWeight: 600,
               color: "var(--btn-fg)",
               background: "var(--btn-bg)",
-              padding: "9px 16px",
+              padding: wide ? "9px 16px" : "8px 12px",
               borderRadius: 10,
+              whiteSpace: "nowrap",
+              flex: "none",
             }}
           >
-            Me contacter
+            {t.contactCta}
           </a>
         </nav>
+
+        <div
+          style={{
+            display: wide ? "none" : "block",
+            position: "absolute",
+            top: "100%",
+            left: 0,
+            right: 0,
+            maxHeight: mobileMenuOpen ? 380 : 0,
+            overflow: "hidden",
+            opacity: mobileMenuOpen ? 1 : 0,
+            transition: "max-height .35s cubic-bezier(.22,1,.36,1), opacity .25s ease",
+            background: "var(--surf2)",
+            borderBottom: "1px solid var(--bd)",
+            boxShadow: "0 16px 40px var(--sh)",
+          }}
+        >
+          <div style={{ display: "flex", flexDirection: "column", padding: "4px 24px 14px", gap: 2 }}>
+            {NAV_ITEMS[lang].map((item) => (
+              <a
+                key={item.id}
+                href={`#${item.id}`}
+                onClick={() => setMobileMenuOpen(false)}
+                style={{
+                  padding: "13px 2px",
+                  fontSize: 15,
+                  fontWeight: 500,
+                  borderBottom: "1px solid var(--bd)",
+                  color: activeSection === item.id ? "var(--tx)" : "var(--tx3)",
+                }}
+              >
+                {item.label}
+              </a>
+            ))}
+            <div style={{ display: "flex", gap: 8, paddingTop: 12 }}>
+              <button
+                type="button"
+                onClick={() => changeLang("fr")}
+                aria-label={t.langToFr}
+                className={`pf-lang-btn${lang === "fr" ? " is-active" : ""}`}
+              >
+                FR
+              </button>
+              <button
+                type="button"
+                onClick={() => changeLang("en")}
+                aria-label={t.langToEn}
+                className={`pf-lang-btn${lang === "en" ? " is-active" : ""}`}
+              >
+                EN
+              </button>
+            </div>
+          </div>
+        </div>
       </header>
 
       <main id="top" style={{ position: "relative", zIndex: 1 }}>
@@ -976,7 +999,7 @@ export default function Home() {
                       animation: "pulseRing 2.2s ease-out infinite",
                     }}
                   />
-                  Disponible — freelance &amp; CDI
+                  {t.heroAvailable}
                 </div>
                 <div
                   style={{
@@ -993,8 +1016,8 @@ export default function Home() {
                     color: "var(--tx2)",
                   }}
                 >
-                  <strong style={{ fontWeight: 600, color: "var(--tx)" }}>2+ ans</strong> d&apos;expérience en
-                  production
+                  <strong style={{ fontWeight: 600, color: "var(--tx)" }}>{t.heroExpBadgeStrong}</strong>{" "}
+                  {t.heroExpBadgeRest}
                 </div>
               </div>
               <h1
@@ -1009,7 +1032,7 @@ export default function Home() {
                   textWrap: "balance",
                 }}
               >
-                Software
+                {t.heroTitleLine1}
                 <span
                   style={{
                     display: "block",
@@ -1021,7 +1044,7 @@ export default function Home() {
                     color: "transparent",
                   }}
                 >
-                  Engineer
+                  {t.heroTitleLine2}
                 </span>
               </h1>
               <p
@@ -1035,8 +1058,7 @@ export default function Home() {
                   textWrap: "pretty",
                 }}
               >
-                Je développe des applications web modernes, performantes et évolutives, de l&apos;interface
-                utilisateur jusqu&apos;au déploiement en production.
+                {t.heroParagraph}
               </p>
               <div
                 ref={heroBtnRef}
@@ -1062,7 +1084,7 @@ export default function Home() {
                     background: "var(--btn-grad)",
                   }}
                 >
-                  Voir mes projets <span style={{ fontFamily: "var(--font-mono)" }}>→</span>
+                  {t.heroCtaPrimary} <span style={{ fontFamily: "var(--font-mono)" }}>→</span>
                 </a>
                 <a
                   href="/cv/CV-Nomena-Andrianiaina-fullstack.pdf"
@@ -1082,7 +1104,7 @@ export default function Home() {
                     backdropFilter: "blur(10px)",
                   }}
                 >
-                  Télécharger mon CV
+                  {t.heroCtaSecondary}
                 </a>
               </div>
               <div
@@ -1096,7 +1118,7 @@ export default function Home() {
                   gap: "24px 30px",
                 }}
               >
-                {HERO_FACTS.map((h) => (
+                {HERO_FACTS[lang].map((h) => (
                   <div key={h.label}>
                     <div
                       style={{
@@ -1158,7 +1180,7 @@ export default function Home() {
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src="/images/portrait.webp"
-                    alt="Portrait de Nomena Andrianiaina"
+                    alt={t.portraitAlt}
                     style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
                   />
                 </div>
@@ -1206,7 +1228,7 @@ export default function Home() {
                         color: "var(--tx5)",
                       }}
                     >
-                      deploy — production
+                      {t.terminalTitle}
                     </span>
                   </div>
                   <div
@@ -1284,7 +1306,7 @@ export default function Home() {
                   color: "var(--accent2)",
                 }}
               >
-                01 — À propos
+                {t.aboutEyebrow}
               </p>
               <h2
                 style={{
@@ -1296,7 +1318,7 @@ export default function Home() {
                   lineHeight: 1.1,
                 }}
               >
-                Je conçois, je livre, et je reste responsable de ce qui tourne.
+                {t.aboutHeading}
               </h2>
             </div>
             <div
@@ -1310,16 +1332,13 @@ export default function Home() {
             >
               <div ref={aboutTextReveal.ref}>
                 <p style={{ margin: 0, color: "var(--tx3)", fontSize: 16.5, lineHeight: 1.75, textWrap: "pretty" }}>
-                  Développeur Full Stack JavaScript spécialisé dans la conception d&apos;applications web modernes,
-                  performantes et évolutives. Plus de deux ans à concevoir des architectures front et back, à écrire
-                  des API robustes et à automatiser tout ce qui peut l&apos;être.
+                  {t.aboutP1}
                 </p>
                 <p style={{ margin: "18px 0 0", color: "var(--tx4)", fontSize: 15.5, lineHeight: 1.75, textWrap: "pretty" }}>
-                  Je travaille aussi bien sur l&apos;expérience utilisateur que sur l&apos;infrastructure qui la sert :
-                  pipelines CI/CD, conteneurisation, reverse proxy, observabilité et déploiements sans interruption.
+                  {t.aboutP2}
                 </p>
                 <div ref={abilitiesStagger.ref} style={{ display: "grid", gap: 12, marginTop: 30 }}>
-                  {ABILITIES.map((ab) => (
+                  {ABILITIES[lang].map((ab) => (
                     <div key={ab} style={{ display: "flex", alignItems: "center", gap: 12, fontSize: 15, color: "var(--tx2)" }}>
                       <span
                         style={{
@@ -1339,9 +1358,9 @@ export default function Home() {
                 ref={statsGridRef}
                 style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 14 }}
               >
-                {stats.map((st) => (
+                {stats.map((st, i) => (
                   <div
-                    key={st.label}
+                    key={i}
                     className="pf-stat-card"
                     style={{
                       padding: "26px 22px",
@@ -1365,7 +1384,9 @@ export default function Home() {
                     >
                       {st.display}
                     </div>
-                    <div style={{ marginTop: 8, fontSize: 13.5, color: "var(--tx3)", lineHeight: 1.4 }}>{st.label}</div>
+                    <div style={{ marginTop: 8, fontSize: 13.5, color: "var(--tx3)", lineHeight: 1.4 }}>
+                      {STATS_LABELS[lang][i]}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -1386,15 +1407,15 @@ export default function Home() {
                   color: "var(--accent2)",
                 }}
               >
-                02 — Expérience
+                {t.expEyebrow}
               </p>
               <h2 style={{ margin: 0, fontSize: "clamp(29px, 3.7vw, 46px)", letterSpacing: "-.035em", fontWeight: 600 }}>
-                Parcours
+                {t.expHeading}
               </h2>
             </div>
             <div style={{ marginTop: 52, display: "grid", gap: 0 }}>
-              {TIMELINE.map((job, i) => (
-                <TimelineItem key={job.role + job.period} job={job} isLast={i === TIMELINE.length - 1} />
+              {TIMELINE[lang].map((job, i) => (
+                <TimelineItem key={job.role + job.period} job={job} isLast={i === TIMELINE[lang].length - 1} />
               ))}
             </div>
           </div>
@@ -1413,19 +1434,16 @@ export default function Home() {
                   color: "var(--accent2)",
                 }}
               >
-                03 — Stack technique
+                {t.stackEyebrow}
               </p>
               <h2 style={{ margin: "0 0 8px", fontSize: "clamp(29px, 3.7vw, 46px)", letterSpacing: "-.035em", fontWeight: 600 }}>
-                Stack technique
+                {t.stackHeading}
               </h2>
-              <p style={{ margin: 0, color: "var(--tx4)", fontSize: 16, maxWidth: "58ch" }}>
-                Des technologies choisies pour ce qu&apos;elles résolvent, pas pour leur popularité — et utilisées en
-                production, pas seulement en side project.
-              </p>
+              <p style={{ margin: 0, color: "var(--tx4)", fontSize: 16, maxWidth: "58ch" }}>{t.stackSubheading}</p>
             </div>
             <div style={{ display: "grid", gap: 44, marginTop: 52 }}>
               {STACK.map((cat) => (
-                <StackCategory key={cat.name} cat={cat} />
+                <StackCategory key={cat.name} cat={cat} label={STACK_CATEGORY_LABELS[lang][cat.name] ?? cat.name} />
               ))}
             </div>
           </div>
@@ -1448,15 +1466,15 @@ export default function Home() {
                     color: "var(--accent2)",
                   }}
                 >
-                  04 — Projets
+                  {t.projectsEyebrow}
                 </p>
                 <h2 style={{ margin: 0, fontSize: "clamp(29px, 3.7vw, 46px)", letterSpacing: "-.035em", fontWeight: 600 }}>
-                  Systèmes construits et mis en production
+                  {t.projectsHeading}
                 </h2>
               </div>
               <div
                 role="tablist"
-                aria-label="Filtrer les projets"
+                aria-label={t.projectsFilterAria}
                 style={{
                   display: "flex",
                   flexWrap: "wrap",
@@ -1468,16 +1486,16 @@ export default function Home() {
                   backdropFilter: "blur(10px)",
                 }}
               >
-                {FILTER_CATS.map((c) => (
+                {FILTER_CATS[lang].map((c) => (
                   <button
-                    key={c}
+                    key={c.key}
                     type="button"
                     role="tab"
-                    aria-selected={c === filter}
-                    onClick={() => setFilter(c)}
-                    className={`pf-filter-tab${c === filter ? " is-active" : ""}`}
+                    aria-selected={c.key === filter}
+                    onClick={() => setFilter(c.key)}
+                    className={`pf-filter-tab${c.key === filter ? " is-active" : ""}`}
                   >
-                    {c}
+                    {c.label}
                   </button>
                 ))}
               </div>
@@ -1516,7 +1534,7 @@ export default function Home() {
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={p.image}
-                      alt={`Capture d'écran du projet ${p.title}`}
+                      alt={`${p.title}${t.projectImageAltSuffix}`}
                       loading="lazy"
                       style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top", display: "block" }}
                     />
@@ -1536,13 +1554,13 @@ export default function Home() {
                         borderRadius: 7,
                       }}
                     >
-                      {p.cat}
+                      {FILTER_CATS[lang].find((c) => c.key === p.cat)?.label ?? p.cat}
                     </span>
                   </div>
                   <div style={{ padding: 22, display: "flex", flexDirection: "column", gap: 14, flex: 1 }}>
                     <h3 style={{ margin: 0, fontSize: 18.5, fontWeight: 600, letterSpacing: "-.02em" }}>{p.title}</h3>
                     <p style={{ margin: 0, fontSize: 14.5, lineHeight: 1.6, color: "var(--tx3)", flex: 1, textWrap: "pretty" }}>
-                      {p.desc}
+                      {PROJECT_DESCRIPTIONS[lang][p.title]}
                     </p>
                     <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
                       {p.tags.map((tag) => (
@@ -1580,7 +1598,7 @@ export default function Home() {
                         className="pf-project-link"
                         style={{ display: "inline-flex", alignItems: "center", gap: 6, color: "var(--tx2)" }}
                       >
-                        GitHub <span style={{ fontFamily: "var(--font-mono)", color: "var(--tx5)" }}>↗</span>
+                        {t.projectGithub} <span style={{ fontFamily: "var(--font-mono)", color: "var(--tx5)" }}>↗</span>
                       </a>
                       <a
                         href={p.demoLink}
@@ -1589,7 +1607,7 @@ export default function Home() {
                         className="pf-project-link"
                         style={{ display: "inline-flex", alignItems: "center", gap: 6, color: "var(--accent2)" }}
                       >
-                        Démo <span style={{ fontFamily: "var(--font-mono)" }}>↗</span>
+                        {t.projectDemo} <span style={{ fontFamily: "var(--font-mono)" }}>↗</span>
                       </a>
                     </div>
                   </div>
@@ -1612,15 +1630,12 @@ export default function Home() {
                   color: "var(--accent2)",
                 }}
               >
-                05 — Processus
+                {t.processEyebrow}
               </p>
               <h2 style={{ margin: "0 0 8px", fontSize: "clamp(29px, 3.7vw, 46px)", letterSpacing: "-.035em", fontWeight: 600 }}>
-                Du commit à la production
+                {t.processHeading}
               </h2>
-              <p style={{ margin: 0, color: "var(--tx4)", fontSize: 16, maxWidth: "58ch" }}>
-                Chaque commit suit le même chemin : rien ne part en production sans tests verts, image versionnée et
-                rollback prêt.
-              </p>
+              <p style={{ margin: 0, color: "var(--tx4)", fontSize: 16, maxWidth: "58ch" }}>{t.processSubheading}</p>
             </div>
             <div
               ref={processCardReveal.ref}
@@ -1635,10 +1650,10 @@ export default function Home() {
               }}
             >
               <div style={{ display: "flex", alignItems: "stretch", gap: 0, minWidth: 880 }}>
-                {STEP_NAMES.map((name, i) => {
+                {STEP_NAMES[lang].map((name, i) => {
                   const on = i <= active;
                   const current = i === active;
-                  const hasLine = i < STEP_NAMES.length - 1;
+                  const hasLine = i < STEP_NAMES[lang].length - 1;
                   return (
                     <div key={name} style={{ flex: 1, display: "flex", alignItems: "center", gap: 0 }}>
                       <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 12, textAlign: "center" }}>
@@ -1678,7 +1693,7 @@ export default function Home() {
                   color: "var(--accent2)",
                 }}
               >
-                06 — Contact
+                {t.contactEyebrow}
               </p>
               <h2
                 style={{
@@ -1690,11 +1705,10 @@ export default function Home() {
                   lineHeight: 1.1,
                 }}
               >
-                Parlons de votre prochain projet.
+                {t.contactHeading}
               </h2>
               <p style={{ margin: "22px 0 0", color: "var(--tx3)", fontSize: 16, lineHeight: 1.7, maxWidth: "46ch" }}>
-                Un système à concevoir, une API à reprendre, une chaîne de déploiement à fiabiliser ? Décrivez le
-                problème, je réponds sous 24 h.
+                {t.contactParagraph}
               </p>
               <div ref={contactLinksStagger.ref} style={{ display: "grid", gap: 10, marginTop: 32 }}>
                 {LINKS.map((l) => (
@@ -1729,7 +1743,7 @@ export default function Home() {
                     >
                       {l.kind}
                     </span>
-                    <span style={{ fontSize: 15 }}>{l.value}</span>
+                    <span style={{ fontSize: 15 }}>{l.kind === "CV" ? t.cvLinkValue : l.value}</span>
                     <span style={{ marginLeft: "auto", fontFamily: "var(--font-mono)", color: "var(--tx5)" }}>↗</span>
                   </a>
                 ))}
@@ -1750,14 +1764,14 @@ export default function Home() {
             >
               <div style={{ display: "grid", gap: 8 }}>
                 <label htmlFor="cname" style={{ fontSize: 13, fontWeight: 500, color: "var(--tx2)" }}>
-                  Nom
+                  {t.formName}
                 </label>
                 <input
                   id="cname"
                   name="name"
                   type="text"
                   required
-                  placeholder="Votre nom"
+                  placeholder={t.formNamePlaceholder}
                   style={{
                     width: "100%",
                     padding: "13px 15px",
@@ -1771,14 +1785,14 @@ export default function Home() {
               </div>
               <div style={{ display: "grid", gap: 8 }}>
                 <label htmlFor="cmail" style={{ fontSize: 13, fontWeight: 500, color: "var(--tx2)" }}>
-                  Email
+                  {t.formEmail}
                 </label>
                 <input
                   id="cmail"
                   name="email"
                   type="email"
                   required
-                  placeholder="vous@entreprise.com"
+                  placeholder={t.formEmailPlaceholder}
                   style={{
                     width: "100%",
                     padding: "13px 15px",
@@ -1792,14 +1806,14 @@ export default function Home() {
               </div>
               <div style={{ display: "grid", gap: 8 }}>
                 <label htmlFor="cmsg" style={{ fontSize: 13, fontWeight: 500, color: "var(--tx2)" }}>
-                  Message
+                  {t.formMessage}
                 </label>
                 <textarea
                   id="cmsg"
                   name="message"
                   rows={5}
                   required
-                  placeholder="Décrivez votre projet en quelques lignes…"
+                  placeholder={t.formMessagePlaceholder}
                   style={{
                     width: "100%",
                     padding: "13px 15px",
@@ -1827,10 +1841,10 @@ export default function Home() {
                   background: "var(--btn-grad)",
                 }}
               >
-                {sending ? "Envoi…" : sent ? "Message envoyé ✓" : "Envoyer le message"}
+                {sending ? t.formSubmitSending : sent ? t.formSubmitSent : t.formSubmit}
               </button>
               <p aria-live="polite" style={{ margin: 0, minHeight: 18, fontSize: 13.5, color: "var(--accent2)" }}>
-                {sent ? "Merci — je reviens vers vous sous 24 h." : ""}
+                {sent ? t.formSuccessNote : ""}
               </p>
             </form>
           </div>
@@ -1851,8 +1865,10 @@ export default function Home() {
               letterSpacing: ".04em",
             }}
           >
-            <span>© 2026 {NAME} — Software Engineer</span>
-            <span>Design ✦ Build ✦ Operate</span>
+            <span>
+              © 2026 {NAME} — {t.footerRole}
+            </span>
+            <span>{t.footerTagline}</span>
           </div>
         </footer>
       </main>
@@ -1860,7 +1876,7 @@ export default function Home() {
   );
 }
 
-function TimelineItem({ job, isLast }: { job: (typeof TIMELINE)[number]; isLast: boolean }) {
+function TimelineItem({ job, isLast }: { job: TimelineJob; isLast: boolean }) {
   const reveal = useReveal<HTMLDivElement>();
   return (
     <div ref={reveal.ref} style={{ display: "grid", gridTemplateColumns: "22px 1fr", gap: 24 }}>
@@ -1927,7 +1943,7 @@ function TimelineItem({ job, isLast }: { job: (typeof TIMELINE)[number]; isLast:
   );
 }
 
-function StackCategory({ cat }: { cat: (typeof STACK)[number] }) {
+function StackCategory({ cat, label }: { cat: (typeof STACK)[number]; label: string }) {
   const reveal = useReveal<HTMLDivElement>();
   const chipsStagger = useStaggerReveal<HTMLDivElement>(".pf-chip", { y: 14, stagger: 0.035 });
   return (
@@ -1943,7 +1959,7 @@ function StackCategory({ cat }: { cat: (typeof STACK)[number] }) {
             color: "var(--tx2)",
           }}
         >
-          {cat.name}
+          {label}
         </h3>
         <div style={{ flex: 1, height: 1, background: "linear-gradient(90deg, var(--bd2), transparent)" }} />
         <span style={{ fontFamily: "var(--font-mono)", fontSize: 11.5, color: "var(--tx5)" }}>{cat.count}</span>

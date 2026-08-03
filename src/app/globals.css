@@ -285,6 +285,24 @@ a:focus-visible {
   color: var(--btn-fg);
 }
 
+.pf-lang-btn {
+  border: 0;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  transition: background 0.25s ease, color 0.25s ease;
+  background: transparent;
+  color: var(--tx3);
+}
+.pf-lang-btn.is-active {
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+}
+
 .pf-project-card {
   transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.35s ease,
     box-shadow 0.35s ease;
