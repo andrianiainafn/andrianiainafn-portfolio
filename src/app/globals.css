@@ -1,0 +1,363 @@
+@import "tailwindcss";
+
+:root {
+  --accent: #2563eb;
+  --accent2: #0e7490;
+  --accent3: #7c3aed;
+  --bg: #fcfcfd;
+  --tx: #09090b;
+  --tx2: #27272a;
+  --tx3: #52525b;
+  --tx4: #64646e;
+  --tx5: #64646e;
+  --bd: rgba(9, 9, 11, 0.09);
+  --bd2: rgba(9, 9, 11, 0.14);
+  --bd3: rgba(9, 9, 11, 0.16);
+  --surf1: rgba(255, 255, 255, 0.72);
+  --surf2: #ffffff;
+  --card-bg: linear-gradient(160deg, #ffffff, #f6f7f9);
+  --header-bg: rgba(252, 252, 253, 0.74);
+  --input-bg: #ffffff;
+  --thumb-bg: #f1f5f9;
+  --sh: rgba(15, 23, 42, 0.1);
+  --sh-strong: rgba(15, 23, 42, 0.16);
+  --grid-line: rgba(9, 9, 11, 0.05);
+  --btn-bg: #09090b;
+  --btn-fg: #ffffff;
+  --btn-grad: linear-gradient(135deg, #18181b, #2b3a67);
+  --stat-grad: linear-gradient(135deg, #0f172a, #3b82f6);
+  --tag-fg: #1d4ed8;
+  --tag-bg: rgba(59, 130, 246, 0.08);
+  --tag-bd: rgba(59, 130, 246, 0.22);
+  --avail-fg: #0e7490;
+  --cat-fg: #4338ca;
+  --badge-bg: rgba(255, 255, 255, 0.88);
+  --chip-off-bg: rgba(9, 9, 11, 0.045);
+  --logo-inv: none;
+  --logo-shade: brightness(0.55) contrast(1.25) saturate(0.6);
+  --glow1: rgba(59, 130, 246, 0.1);
+  --glow2: rgba(139, 92, 246, 0.09);
+  --glow3: rgba(6, 182, 212, 0.07);
+  --step-on-fg: #0e7490;
+}
+
+html[data-theme="dark"] {
+  --accent: #3b82f6;
+  --accent2: #06b6d4;
+  --accent3: #8b5cf6;
+  --bg: #09090b;
+  --tx: #fafafa;
+  --tx2: #d4d4d8;
+  --tx3: #a1a1aa;
+  --tx4: #71717a;
+  --tx5: #52525b;
+  --bd: rgba(255, 255, 255, 0.075);
+  --bd2: rgba(255, 255, 255, 0.1);
+  --bd3: rgba(255, 255, 255, 0.14);
+  --surf1: rgba(17, 24, 39, 0.55);
+  --surf2: rgba(17, 24, 39, 0.9);
+  --card-bg: linear-gradient(160deg, rgba(17, 24, 39, 0.9), rgba(9, 9, 11, 0.6));
+  --header-bg: rgba(9, 9, 11, 0.62);
+  --input-bg: rgba(9, 9, 11, 0.7);
+  --thumb-bg: #0b0f19;
+  --sh: rgba(0, 0, 0, 0.5);
+  --sh-strong: rgba(0, 0, 0, 0.65);
+  --grid-line: rgba(255, 255, 255, 0.028);
+  --btn-bg: #fafafa;
+  --btn-fg: #09090b;
+  --btn-grad: linear-gradient(135deg, #ffffff, #d9e6ff);
+  --stat-grad: linear-gradient(135deg, #ffffff, #93c5fd);
+  --tag-fg: #93c5fd;
+  --tag-bg: rgba(59, 130, 246, 0.1);
+  --tag-bd: rgba(59, 130, 246, 0.22);
+  --avail-fg: #a5f3fc;
+  --cat-fg: #a5b4fc;
+  --badge-bg: rgba(9, 9, 11, 0.7);
+  --chip-off-bg: rgba(255, 255, 255, 0.07);
+  --logo-inv: invert(1) brightness(1.9);
+  --logo-shade: brightness(1.15);
+  --glow1: rgba(59, 130, 246, 0.16);
+  --glow2: rgba(139, 92, 246, 0.14);
+  --glow3: rgba(6, 182, 212, 0.08);
+  --step-on-fg: #e0f2fe;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display), var(--font-sans), system-ui, sans-serif;
+  font-optical-sizing: auto;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--tx);
+  transition: background 0.35s ease, color 0.35s ease;
+  font-family: var(--font-sans), system-ui, -apple-system, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+a {
+  color: var(--accent2);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+::selection {
+  background: rgba(59, 130, 246, 0.35);
+}
+
+input,
+textarea,
+button {
+  font-family: inherit;
+}
+
+input:focus-visible,
+textarea:focus-visible,
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--accent2);
+  outline-offset: 3px;
+}
+
+@keyframes floatY {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulseRing {
+  0% {
+    box-shadow: 0 0 0 0 rgba(6, 182, 212, 0.45);
+  }
+  100% {
+    box-shadow: 0 0 0 14px rgba(6, 182, 212, 0);
+  }
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.15;
+  }
+}
+
+@keyframes pfPreloaderPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.92;
+  }
+  50% {
+    transform: scale(1.07);
+    opacity: 1;
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ---------- Interactive component classes ---------- */
+
+.pf-theme-btn {
+  transition: border-color 0.25s ease, transform 0.25s ease, background 0.25s ease;
+}
+.pf-theme-btn:hover {
+  border-color: var(--accent2);
+  transform: translateY(-1px);
+  background: var(--surf2);
+}
+
+.pf-nav-link {
+  position: relative;
+  padding-bottom: 3px;
+  transition: color 0.2s ease;
+}
+.pf-nav-link:hover {
+  color: var(--tx);
+}
+.pf-nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 100%;
+  bottom: -2px;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #3b82f6, #06b6d4, #8b5cf6);
+  transition: right 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.pf-nav-link.is-active::after {
+  right: 0;
+}
+
+.pf-btn-contact {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.pf-btn-contact:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 30px var(--sh);
+  color: var(--btn-fg);
+}
+
+.pf-btn-primary {
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+.pf-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 40px rgba(59, 130, 246, 0.32);
+  color: var(--btn-fg);
+}
+
+.pf-btn-secondary {
+  transition: border-color 0.22s ease, transform 0.22s ease, background 0.22s ease;
+}
+.pf-btn-secondary:hover {
+  transform: translateY(-2px);
+  border-color: rgba(6, 182, 212, 0.5);
+  background: var(--surf2);
+  color: var(--tx);
+}
+
+.pf-stat-card {
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+.pf-stat-card:hover {
+  border-color: rgba(6, 182, 212, 0.35);
+  transform: translateY(-3px);
+}
+
+.pf-chip {
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.25s ease,
+    background 0.25s ease, box-shadow 0.25s ease;
+}
+.pf-chip:hover {
+  transform: translateY(-4px) scale(1.02);
+  border-color: rgba(59, 130, 246, 0.45);
+  background: var(--surf2);
+  box-shadow: 0 14px 34px var(--sh);
+}
+
+.pf-filter-tab {
+  border: 0;
+  cursor: pointer;
+  padding: 8px 15px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+  transition: background 0.25s ease, color 0.25s ease;
+  background: transparent;
+  color: var(--tx3);
+}
+.pf-filter-tab.is-active {
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+}
+
+.pf-project-card {
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.35s ease,
+    box-shadow 0.35s ease;
+}
+.pf-project-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(139, 92, 246, 0.55);
+  box-shadow: 0 30px 70px var(--sh-strong), 0 0 0 1px rgba(139, 92, 246, 0.25),
+    0 12px 60px rgba(139, 92, 246, 0.18);
+}
+
+.pf-project-link:hover {
+  color: var(--tx);
+}
+
+.pf-step-badge {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono), monospace;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  border: 1px solid var(--bd2);
+  background: var(--chip-off-bg);
+  color: var(--tx5);
+}
+.pf-step-badge.is-on {
+  border-color: rgba(6, 182, 212, 0.55);
+  background: rgba(6, 182, 212, 0.12);
+  color: var(--step-on-fg);
+}
+.pf-step-badge.is-current {
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.28), rgba(139, 92, 246, 0.24));
+  box-shadow: 0 0 26px rgba(6, 182, 212, 0.45);
+}
+.pf-step-label {
+  font-size: 12.5px;
+  line-height: 1.35;
+  transition: color 0.5s ease;
+  color: var(--tx5);
+}
+.pf-step-label.is-on {
+  color: var(--tx2);
+}
+.pf-step-line {
+  width: 26px;
+  height: 1px;
+  flex: none;
+  margin-bottom: 26px;
+  transition: background 0.5s ease;
+  background: var(--bd);
+}
+.pf-step-line.is-on {
+  background: rgba(6, 182, 212, 0.5);
+}
+
+.pf-link-row {
+  transition: border-color 0.25s ease, transform 0.25s ease, background 0.25s ease;
+}
+.pf-link-row:hover {
+  border-color: rgba(6, 182, 212, 0.45);
+  transform: translateX(4px);
+  background: var(--surf2);
+  color: var(--tx);
+}
+
+.pf-submit-btn {
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+.pf-submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 36px rgba(59, 130, 246, 0.3);
+}
