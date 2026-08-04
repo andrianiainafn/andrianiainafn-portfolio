@@ -82,6 +82,7 @@ export const UI: Record<Lang, Record<string, string>> = {
     formSubmitSending: "Envoi…",
     formSubmitSent: "Message envoyé ✓",
     formSuccessNote: "Merci — je reviens vers vous sous 24 h.",
+    formErrorNote: "Une erreur est survenue. Réessayez ou écrivez-moi directement à nomenaf.pro@gmail.com.",
 
     footerRole: "Software Engineer",
     footerTagline: "Design ✦ Build ✦ Operate",
@@ -150,6 +151,7 @@ export const UI: Record<Lang, Record<string, string>> = {
     formSubmitSending: "Sending…",
     formSubmitSent: "Message sent ✓",
     formSuccessNote: "Thanks — I'll get back to you within 24 hours.",
+    formErrorNote: "Something went wrong. Please try again or email me directly at nomenaf.pro@gmail.com.",
 
     footerRole: "Software Engineer",
     footerTagline: "Design ✦ Build ✦ Operate",

@@ -162,6 +162,7 @@ const PROJECTS = [
 
 const LINKS = [
   { kind: "Email", value: "nomenaf.pro@gmail.com", href: "mailto:nomenaf.pro@gmail.com" },
+  { kind: "WhatsApp", value: "+261 34 43 831 15", href: "https://wa.me/261344383115" },
   { kind: "GitHub", value: "github.com/andrianiainafn", href: "https://github.com/andrianiainafn" },
   {
     kind: "LinkedIn",
@@ -176,7 +177,7 @@ const LINKS = [
   {
     kind: "CV",
     value: "Télécharger le CV (PDF)",
-    href: "/cv/CV-Nomena-Andrianiaina-fullstack.pdf",
+    href: "/cv/CV-ATS-FR.pdf",
   },
 ];
 
@@ -280,6 +281,7 @@ export default function Home() {
   const [termLines, setTermLines] = useState<typeof TERMINAL_SRC>([]);
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
+  const [sendError, setSendError] = useState(false);
   const [loading, setLoading] = useState(true);
   const [loadPct, setLoadPct] = useState(0);
   const [activeSection, setActiveSection] = useState("");
@@ -332,6 +334,8 @@ export default function Home() {
   };
 
   const t = UI[lang];
+  const cvHref = lang === "en" ? "/cv/CV-ATS-EN.pdf" : "/cv/CV-ATS-FR.pdf";
+  const cvDownloadName = lang === "en" ? "CV-Nomena-Andrianiaina-EN.pdf" : "CV-Nomena-Andrianiaina-FR.pdf";
 
   // Responsive layout switch (nav links, hero terminal panel).
   useEffect(() => {
@@ -569,13 +573,33 @@ export default function Home() {
     };
   }, []);
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const form = e.currentTarget;
+    const data = new FormData(form);
+    const payload = {
+      name: String(data.get("name") ?? ""),
+      email: String(data.get("email") ?? ""),
+      message: String(data.get("message") ?? ""),
+    };
+
     setSending(true);
-    setTimeout(() => {
-      setSending(false);
+    setSendError(false);
+    setSent(false);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) throw new Error("send_failed");
+      form.reset();
       setSent(true);
-    }, 900);
+    } catch {
+      setSendError(true);
+    } finally {
+      setSending(false);
+    }
   };
 
   const visibleProjects = filter === "all" ? PROJECTS : PROJECTS.filter((p) => p.cat === filter);
@@ -1087,8 +1111,8 @@ export default function Home() {
                   {t.heroCtaPrimary} <span style={{ fontFamily: "var(--font-mono)" }}>→</span>
                 </a>
                 <a
-                  href="/cv/CV-Nomena-Andrianiaina-fullstack.pdf"
-                  download="CV-Nomena-Andrianiaina.pdf"
+                  href={cvHref}
+                  download={cvDownloadName}
                   className="pf-btn-secondary"
                   style={{
                     display: "inline-flex",
@@ -1714,10 +1738,10 @@ export default function Home() {
                 {LINKS.map((l) => (
                   <a
                     key={l.kind}
-                    href={l.href}
+                    href={l.kind === "CV" ? cvHref : l.href}
                     target={l.href.startsWith("http") ? "_blank" : undefined}
                     rel={l.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                    download={l.kind === "CV" ? "CV-Nomena-Andrianiaina.pdf" : undefined}
+                    download={l.kind === "CV" ? cvDownloadName : undefined}
                     className="pf-link-row"
                     style={{
                       display: "flex",
@@ -1736,14 +1760,14 @@ export default function Home() {
                         fontSize: 11,
                         letterSpacing: ".1em",
                         textTransform: "uppercase",
-                        color: "var(--tx5)",
+                        color: "var(--tx3)",
                         width: 66,
                         flex: "none",
                       }}
                     >
                       {l.kind}
                     </span>
-                    <span style={{ fontSize: 15 }}>{l.kind === "CV" ? t.cvLinkValue : l.value}</span>
+                    <span style={{ fontSize: 15, color: "var(--tx)" }}>{l.kind === "CV" ? t.cvLinkValue : l.value}</span>
                     <span style={{ marginLeft: "auto", fontFamily: "var(--font-mono)", color: "var(--tx5)" }}>↗</span>
                   </a>
                 ))}
@@ -1843,8 +1867,16 @@ export default function Home() {
               >
                 {sending ? t.formSubmitSending : sent ? t.formSubmitSent : t.formSubmit}
               </button>
-              <p aria-live="polite" style={{ margin: 0, minHeight: 18, fontSize: 13.5, color: "var(--accent2)" }}>
-                {sent ? t.formSuccessNote : ""}
+              <p
+                aria-live="polite"
+                style={{
+                  margin: 0,
+                  minHeight: 18,
+                  fontSize: 13.5,
+                  color: sendError ? "var(--err-fg, #EF4444)" : "var(--accent2)",
+                }}
+              >
+                {sendError ? t.formErrorNote : sent ? t.formSuccessNote : ""}
               </p>
             </form>
           </div>
