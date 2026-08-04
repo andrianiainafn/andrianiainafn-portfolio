@@ -1499,13 +1499,13 @@ export default function Home() {
               <div
                 role="tablist"
                 aria-label={t.projectsFilterAria}
+                className="pf-filter-tablist"
                 style={{
                   display: "flex",
                   flexWrap: "wrap",
                   gap: 8,
                   padding: 5,
                   border: "1px solid var(--bd)",
-                  borderRadius: 999,
                   background: "var(--surf1)",
                   backdropFilter: "blur(10px)",
                 }}

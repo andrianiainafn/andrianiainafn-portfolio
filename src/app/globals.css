@@ -269,6 +269,15 @@ a:focus-visible {
   box-shadow: 0 14px 34px var(--sh);
 }
 
+.pf-filter-tablist {
+  border-radius: 999px;
+}
+@media (max-width: 600px) {
+  .pf-filter-tablist {
+    border-radius: 20px;
+  }
+}
+
 .pf-filter-tab {
   border: 0;
   cursor: pointer;
