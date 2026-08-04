@@ -43,7 +43,7 @@ export const UI: Record<Lang, Record<string, string>> = {
     aboutEyebrow: "01 — À propos",
     aboutHeading: "Je conçois, je livre, et je reste responsable de ce qui tourne.",
     aboutP1:
-      "Développeur Full Stack JavaScript spécialisé dans la conception d'applications web modernes, performantes et évolutives. Plus de deux ans à concevoir des architectures front et back, à écrire des API robustes et à automatiser tout ce qui peut l'être.",
+      "Ingénieur Logiciel sorti de l'École Nationale d'Informatique (ENI) de Fianarantsoa. Je conçois et je livre des applications web robustes, du design de l'architecture jusqu'au déploiement en production — plus de deux ans à construire des systèmes fiables et performants, à écrire des API solides et à automatiser tout ce qui peut l'être.",
     aboutP2:
       "Je travaille aussi bien sur l'expérience utilisateur que sur l'infrastructure qui la sert : pipelines CI/CD, conteneurisation, reverse proxy, observabilité et déploiements sans interruption.",
 
@@ -112,7 +112,7 @@ export const UI: Record<Lang, Record<string, string>> = {
     aboutEyebrow: "01 — About",
     aboutHeading: "I design, I ship, and I stay accountable for what's running.",
     aboutP1:
-      "Full Stack JavaScript developer specialized in designing modern, performant, scalable web applications. Over two years designing front and back-end architectures, writing robust APIs, and automating everything that can be automated.",
+      "Software Engineer, graduate of the École Nationale d'Informatique (ENI) in Fianarantsoa. I design and ship robust web applications, from architecture to production deployment — over two years building reliable, high-performing systems, writing solid APIs, and automating everything that can be automated.",
     aboutP2:
       "I work on the user experience just as much as the infrastructure behind it: CI/CD pipelines, containerization, reverse proxying, observability, and zero-downtime deployments.",
 
