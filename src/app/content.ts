@@ -232,6 +232,23 @@ export const TIMELINE: Record<Lang, TimelineJob[]> = {
       tech: ["Next.js", "TypeScript", "Node.js", "Java", "PostgreSQL", "Docker", "CI/CD"],
     },
     {
+      role: "Chargé d'optimisation SEO",
+      company: "Claude Agency — Télétravail",
+      period: "Août 2026 — Octobre 2026",
+      summary:
+        "Participation à l'amélioration du référencement naturel et de la visibilité de sites web à travers différentes actions d'optimisation.",
+      wins: [
+        "Optimisation SEO on-page : amélioration des titres, méta-descriptions, balises HTML et contenus des pages",
+        "Recherche et analyse de mots-clés pour améliorer le positionnement sur les moteurs de recherche",
+        "Optimisation technique SEO : structure des pages, indexation et accessibilité des contenus",
+        "Amélioration des performances et du temps de chargement des sites web",
+        "Rédaction et optimisation de contenus adaptés aux exigences du référencement naturel",
+        "Mise en place et suivi de stratégies de backlinks",
+        "Suivi des performances et de l'indexation avec Google Search Console",
+      ],
+      tech: ["SEO Audits", "Google Search Console"],
+    },
+    {
       role: "Développeur Full-stack",
       company: "Webradio.ai — France (télétravail)",
       period: "Février 2025 — Février 2026",
@@ -307,6 +324,23 @@ export const TIMELINE: Record<Lang, TimelineJob[]> = {
         "Automated containerized deployments: releases cut down to a few minutes",
       ],
       tech: ["Next.js", "TypeScript", "Node.js", "Java", "PostgreSQL", "Docker", "CI/CD"],
+    },
+    {
+      role: "SEO Optimization Specialist",
+      company: "Claude Agency — Remote",
+      period: "August 2026 — October 2026",
+      summary:
+        "Contributed to improving the organic search ranking and visibility of websites through a range of optimization work.",
+      wins: [
+        "On-page SEO: improving page titles, meta descriptions, HTML tags, and page content",
+        "Keyword research and analysis to improve search engine rankings",
+        "Technical SEO: page structure, indexing, and content accessibility",
+        "Improving website performance and load times",
+        "Writing and optimizing content to meet organic search requirements",
+        "Setting up and monitoring backlink strategies",
+        "Tracking performance and indexing with Google Search Console",
+      ],
+      tech: ["SEO Audits", "Google Search Console"],
     },
     {
       role: "Full-stack Developer",
