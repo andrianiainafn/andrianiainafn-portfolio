@@ -393,6 +393,14 @@ export const STACK_CATEGORY_LABELS: Record<Lang, Record<string, string>> = {
 
 export const PROJECT_DESCRIPTIONS: Record<Lang, Record<string, string>> = {
   fr: {
+    Dodoterla:
+      "Plateforme de gestion de locations saisonnières à La Réunion : calendrier, réservations, arrivées et départs du jour, planning du ménage, partenaires, revenus et diffusion des annonces.",
+    MyAlfa:
+      "Logiciel de gestion pour indépendants, TPE et PME : factures, devis, banque, dépenses, stock et trésorerie centralisés et partagés avec l'expert-comptable, sur web et mobile.",
+    TransacTPE:
+      "Plateforme de cession et de reprise de TPE dans l'Océan Indien : annonces, recherche par secteur, territoire et budget, mise en relation entre cédants, acquéreurs et professionnels.",
+    "Idyll Immo":
+      "Gestion locative pour bailleurs, sans agence : bail, loyers, état des lieux, GED et défiscalisation réunis dans une plateforme conforme à la loi ALUR.",
     GMI: "Application de gestion du parc informatique pour entreprises : suivi en temps réel de l'état des équipements, affectation du personnel, demandes de matériel et signalement de maintenance.",
     "Dot Double Zero [.00]":
       "Site pour agents secrets : réception de missions et documents, commande à distance des gadgets et moyens de transport, assistance en temps réel entre coéquipiers via géolocalisation et signal de détresse.",
@@ -404,6 +412,14 @@ export const PROJECT_DESCRIPTIONS: Record<Lang, Record<string, string>> = {
       "Site vitrine d'une agence digitale : de l'idée à la mise en production, présentation des services et du savoir-faire de l'équipe.",
   },
   en: {
+    Dodoterla:
+      "Vacation rental management platform in Reunion Island: calendar, bookings, today's arrivals and departures, cleaning schedule, partners, revenue, and listing distribution.",
+    MyAlfa:
+      "Business management software for freelancers and small businesses: invoices, quotes, banking, expenses, stock, and cash flow centralized and shared with the accountant, on web and mobile.",
+    TransacTPE:
+      "Marketplace for selling and acquiring small businesses across the Indian Ocean: listings, search by sector, territory, and budget, connecting sellers, buyers, and professionals.",
+    "Idyll Immo":
+      "Agency-free rental management for landlords: leases, rent, inventory reports, document management, and tax optimization in one ALUR-compliant platform.",
     GMI: "IT equipment management application for businesses: real-time tracking of equipment status, staff assignment, equipment requests, and maintenance reporting.",
     "Dot Double Zero [.00]":
       "A website for secret agents: receiving missions and documents, remotely commanding gadgets and transport, and real-time teammate assistance via geolocation and a distress signal.",
@@ -419,12 +435,14 @@ export const PROJECT_DESCRIPTIONS: Record<Lang, Record<string, string>> = {
 export const FILTER_CATS: Record<Lang, { key: string; label: string }[]> = {
   fr: [
     { key: "all", label: "Tous" },
+    { key: "client", label: "Client" },
     { key: "personal", label: "Personnel" },
     { key: "hackathon", label: "Hackathon" },
     { key: "team", label: "Équipe" },
   ],
   en: [
     { key: "all", label: "All" },
+    { key: "client", label: "Client" },
     { key: "personal", label: "Personal" },
     { key: "hackathon", label: "Hackathon" },
     { key: "team", label: "Team" },

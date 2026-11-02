@@ -117,7 +117,44 @@ const STACK = [
   },
 ].map((c) => ({ ...c, count: String(c.items.length).padStart(2, "0") }));
 
-const PROJECTS = [
+type Project = {
+  title: string;
+  cat: string;
+  image: string;
+  tags: string[];
+  githubLink?: string;
+  demoLink: string;
+};
+
+const PROJECTS: Project[] = [
+  {
+    title: "Dodoterla",
+    cat: "client",
+    image: "/projects/dodoterla.jpg",
+    tags: ["Next.js", "TypeScript", "Node.js", "PostgreSQL"],
+    demoLink: "https://www.dodoterla.re",
+  },
+  {
+    title: "MyAlfa",
+    cat: "client",
+    image: "/projects/myalfa.jpg",
+    tags: ["Next.js", "TypeScript", "Node.js", "PostgreSQL"],
+    demoLink: "https://www.myalfa.app/",
+  },
+  {
+    title: "TransacTPE",
+    cat: "client",
+    image: "/projects/transactpe.jpg",
+    tags: ["Next.js", "TypeScript", "Node.js", "PostgreSQL"],
+    demoLink: "https://e-deal.app/",
+  },
+  {
+    title: "Idyll Immo",
+    cat: "client",
+    image: "/projects/idyllimmo.jpg",
+    tags: ["Next.js", "TypeScript", "Node.js", "PostgreSQL"],
+    demoLink: "https://www.idyllimmo.com/",
+  },
   {
     title: "GMI",
     cat: "personal",
@@ -1615,15 +1652,17 @@ export default function Home() {
                         fontWeight: 500,
                       }}
                     >
-                      <a
-                        href={p.githubLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="pf-project-link"
-                        style={{ display: "inline-flex", alignItems: "center", gap: 6, color: "var(--tx2)" }}
-                      >
-                        {t.projectGithub} <span style={{ fontFamily: "var(--font-mono)", color: "var(--tx5)" }}>↗</span>
-                      </a>
+                      {p.githubLink && (
+                        <a
+                          href={p.githubLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="pf-project-link"
+                          style={{ display: "inline-flex", alignItems: "center", gap: 6, color: "var(--tx2)" }}
+                        >
+                          {t.projectGithub} <span style={{ fontFamily: "var(--font-mono)", color: "var(--tx5)" }}>↗</span>
+                        </a>
+                      )}
                       <a
                         href={p.demoLink}
                         target="_blank"
