@@ -23,7 +23,7 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Nomena Andrianiaina — Software Engineer",
   description:
-    "Développeur Full Stack JavaScript — applications web modernes, performantes et évolutives, de l'interface utilisateur jusqu'au déploiement en production.",
+    "Développeur Full Stack — applications web modernes, performantes et évolutives, de l'interface utilisateur jusqu'au déploiement en production.",
 };
 
 export default function RootLayout({

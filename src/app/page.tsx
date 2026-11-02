@@ -156,6 +156,13 @@ const PROJECTS: Project[] = [
     demoLink: "https://www.idyllimmo.com/",
   },
   {
+    title: "Webradio.ai",
+    cat: "client",
+    image: "/projects/webradio.jpg",
+    tags: ["Next.js", "TypeScript", "Prisma", "MySQL"],
+    demoLink: "https://webradio.ai/",
+  },
+  {
     title: "GMI",
     cat: "personal",
     image: "/projects/gm-i.png",

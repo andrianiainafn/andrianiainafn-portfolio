@@ -219,17 +219,17 @@ export interface TimelineJob {
 export const TIMELINE: Record<Lang, TimelineJob[]> = {
   fr: [
     {
-      role: "Développeur Full Stack JavaScript",
+      role: "Développeur Full Stack",
       company: "Alfa OI",
       period: "Mai 2026 — aujourd'hui",
       summary:
-        "Développement d'applications web métier en JavaScript/TypeScript, de la conception des API à la mise en production.",
+        "Développement d'applications web métier en TypeScript et Java, de la conception des API à la mise en production.",
       wins: [
         "Modules full stack livrés en production sur un cycle de deux semaines",
         "API REST documentées mutualisées entre plusieurs applications internes",
         "Déploiements conteneurisés automatisés : mise en ligne ramenée à quelques minutes",
       ],
-      tech: ["Next.js", "TypeScript", "Node.js", "PostgreSQL", "Docker", "CI/CD"],
+      tech: ["Next.js", "TypeScript", "Node.js", "Java", "PostgreSQL", "Docker", "CI/CD"],
     },
     {
       role: "Développeur Full-stack",
@@ -296,17 +296,17 @@ export const TIMELINE: Record<Lang, TimelineJob[]> = {
   ],
   en: [
     {
-      role: "Full Stack JavaScript Developer",
+      role: "Full Stack Developer",
       company: "Alfa OI",
       period: "May 2026 — present",
       summary:
-        "Development of business web applications in JavaScript/TypeScript, from API design to production deployment.",
+        "Development of business web applications in TypeScript and Java, from API design to production deployment.",
       wins: [
         "Full-stack modules shipped to production on a two-week cycle",
         "Documented REST APIs shared across several internal applications",
         "Automated containerized deployments: releases cut down to a few minutes",
       ],
-      tech: ["Next.js", "TypeScript", "Node.js", "PostgreSQL", "Docker", "CI/CD"],
+      tech: ["Next.js", "TypeScript", "Node.js", "Java", "PostgreSQL", "Docker", "CI/CD"],
     },
     {
       role: "Full-stack Developer",
@@ -401,6 +401,8 @@ export const PROJECT_DESCRIPTIONS: Record<Lang, Record<string, string>> = {
       "Plateforme de cession et de reprise de TPE dans l'Océan Indien : annonces, recherche par secteur, territoire et budget, mise en relation entre cédants, acquéreurs et professionnels.",
     "Idyll Immo":
       "Gestion locative pour bailleurs, sans agence : bail, loyers, état des lieux, GED et défiscalisation réunis dans une plateforme conforme à la loi ALUR.",
+    "Webradio.ai":
+      "Plateforme de podcasts et de webradio générés par IA pour communes, collectivités, associations et entreprises : flash info, magazines et contenus audio à leur image, sans studio.",
     GMI: "Application de gestion du parc informatique pour entreprises : suivi en temps réel de l'état des équipements, affectation du personnel, demandes de matériel et signalement de maintenance.",
     "Dot Double Zero [.00]":
       "Site pour agents secrets : réception de missions et documents, commande à distance des gadgets et moyens de transport, assistance en temps réel entre coéquipiers via géolocalisation et signal de détresse.",
@@ -420,6 +422,8 @@ export const PROJECT_DESCRIPTIONS: Record<Lang, Record<string, string>> = {
       "Marketplace for selling and acquiring small businesses across the Indian Ocean: listings, search by sector, territory, and budget, connecting sellers, buyers, and professionals.",
     "Idyll Immo":
       "Agency-free rental management for landlords: leases, rent, inventory reports, document management, and tax optimization in one ALUR-compliant platform.",
+    "Webradio.ai":
+      "AI-generated podcast and web radio platform for municipalities, local authorities, associations, and businesses: news flashes, magazines, and branded audio content, no studio needed.",
     GMI: "IT equipment management application for businesses: real-time tracking of equipment status, staff assignment, equipment requests, and maintenance reporting.",
     "Dot Double Zero [.00]":
       "A website for secret agents: receiving missions and documents, remotely commanding gadgets and transport, and real-time teammate assistance via geolocation and a distress signal.",
