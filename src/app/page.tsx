@@ -1177,19 +1177,18 @@ export default function Home() {
               </div>
               <div
                 ref={heroFactsRef}
+                className="pf-hero-facts"
                 style={{
                   marginTop: 56,
                   paddingTop: 28,
                   borderTop: "1px solid var(--bd)",
-                  display: "grid",
-                  gridTemplateColumns: "repeat(auto-fit, minmax(130px, 1fr))",
-                  gap: "24px 30px",
                 }}
               >
                 {HERO_FACTS[lang].map((h) => (
                   <div key={h.label}>
                     <div
                       style={{
+                        whiteSpace: "nowrap",
                         fontSize: 26,
                         fontWeight: 600,
                         letterSpacing: "-.03em",

@@ -388,3 +388,17 @@ a:focus-visible {
   transform: translateY(-2px);
   box-shadow: 0 14px 36px rgba(59, 130, 246, 0.3);
 }
+
+/* Hero stats: one row of 4 on desktop, 2x2 on small screens. */
+.pf-hero-facts {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  justify-content: space-between;
+  gap: 24px;
+}
+@media (max-width: 640px) {
+  .pf-hero-facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    justify-content: stretch;
+  }
+}
