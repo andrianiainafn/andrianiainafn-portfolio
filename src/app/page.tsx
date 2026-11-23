@@ -131,7 +131,7 @@ const PROJECTS: Project[] = [
     title: "Dodoterla",
     cat: "client",
     image: "/projects/dodoterla.jpg",
-    tags: ["React", "Node.js", "Stripe", "Vercel"],
+    tags: ["React", "React Native", "Node.js", "Python", "Machine Learning", "scikit-learn", "Stripe", "Vercel"],
     demoLink: "https://www.dodoterla.re",
   },
   {
