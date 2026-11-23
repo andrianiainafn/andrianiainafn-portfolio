@@ -437,6 +437,8 @@ export const PROJECT_DESCRIPTIONS: Record<Lang, Record<string, string>> = {
       "Gestion locative pour bailleurs, sans agence : bail, loyers, état des lieux, GED et défiscalisation réunis dans une plateforme conforme à la loi ALUR.",
     "Webradio.ai":
       "Plateforme de podcasts et de webradio générés par IA pour communes, collectivités, associations et entreprises : flash info, magazines et contenus audio à leur image, sans studio.",
+    Tracklyst:
+      "Application de gestion de budget personnel pensée pour l'ariary : plafonds de dépenses, rappels d'abonnements, objectifs d'épargne et suivi par compte (banque, MVola, espèces), sur mobile Android et sur le web.",
     GMI: "Application de gestion du parc informatique pour entreprises : suivi en temps réel de l'état des équipements, affectation du personnel, demandes de matériel et signalement de maintenance.",
     "Dot Double Zero [.00]":
       "Site pour agents secrets : réception de missions et documents, commande à distance des gadgets et moyens de transport, assistance en temps réel entre coéquipiers via géolocalisation et signal de détresse.",
@@ -458,6 +460,8 @@ export const PROJECT_DESCRIPTIONS: Record<Lang, Record<string, string>> = {
       "Agency-free rental management for landlords: leases, rent, inventory reports, document management, and tax optimization in one ALUR-compliant platform.",
     "Webradio.ai":
       "AI-generated podcast and web radio platform for municipalities, local authorities, associations, and businesses: news flashes, magazines, and branded audio content, no studio needed.",
+    Tracklyst:
+      "Personal budgeting app built for the Malagasy ariary: spending limits, subscription reminders, savings goals, and per-account tracking (bank, MVola, cash), on Android and the web.",
     GMI: "IT equipment management application for businesses: real-time tracking of equipment status, staff assignment, equipment requests, and maintenance reporting.",
     "Dot Double Zero [.00]":
       "A website for secret agents: receiving missions and documents, remotely commanding gadgets and transport, and real-time teammate assistance via geolocation and a distress signal.",

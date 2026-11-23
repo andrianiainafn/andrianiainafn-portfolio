@@ -163,6 +163,13 @@ const PROJECTS: Project[] = [
     demoLink: "https://webradio.ai/",
   },
   {
+    title: "Tracklyst",
+    cat: "personal",
+    image: "/projects/tracklyst.jpg",
+    tags: ["React Native", "Next.js", "Supabase"],
+    demoLink: "https://tracklyst.51-79-207-57.sslip.io",
+  },
+  {
     title: "GMI",
     cat: "personal",
     image: "/projects/gm-i.png",
