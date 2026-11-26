@@ -60,6 +60,9 @@ export const UI: Record<Lang, Record<string, string>> = {
     projectsFilterAria: "Filtrer les projets",
     projectGithub: "GitHub",
     projectDemo: "Démo",
+    projectMobileBadge: "App mobile",
+    projectGooglePlay: "Google Play",
+    projectApk: "Android (APK)",
     projectImageAltSuffix: " — capture d'écran",
 
     processEyebrow: "05 — Processus",
@@ -129,6 +132,9 @@ export const UI: Record<Lang, Record<string, string>> = {
     projectsFilterAria: "Filter projects",
     projectGithub: "GitHub",
     projectDemo: "Demo",
+    projectMobileBadge: "Mobile app",
+    projectGooglePlay: "Google Play",
+    projectApk: "Android (APK)",
     projectImageAltSuffix: " — screenshot",
 
     processEyebrow: "05 — Process",
@@ -478,6 +484,7 @@ export const FILTER_CATS: Record<Lang, { key: string; label: string }[]> = {
   fr: [
     { key: "all", label: "Tous" },
     { key: "client", label: "Client" },
+    { key: "mobile", label: "Mobile" },
     { key: "personal", label: "Personnel" },
     { key: "hackathon", label: "Hackathon" },
     { key: "team", label: "Équipe" },
@@ -485,6 +492,7 @@ export const FILTER_CATS: Record<Lang, { key: string; label: string }[]> = {
   en: [
     { key: "all", label: "All" },
     { key: "client", label: "Client" },
+    { key: "mobile", label: "Mobile" },
     { key: "personal", label: "Personal" },
     { key: "hackathon", label: "Hackathon" },
     { key: "team", label: "Team" },

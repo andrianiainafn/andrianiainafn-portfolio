@@ -124,6 +124,7 @@ type Project = {
   tags: string[];
   githubLink?: string;
   demoLink: string;
+  stores?: { kind: "play" | "apk"; href: string }[];
 };
 
 const PROJECTS: Project[] = [
@@ -133,6 +134,7 @@ const PROJECTS: Project[] = [
     image: "/projects/dodoterla.jpg",
     tags: ["React", "React Native", "Node.js", "Python", "Machine Learning", "scikit-learn", "Stripe", "Vercel"],
     demoLink: "https://www.dodoterla.re",
+    stores: [{ kind: "play", href: "https://play.google.com/store/apps/details?id=com.fanomezantsoana.dodoterlaapp" }],
   },
   {
     title: "MyAlfa",
@@ -140,6 +142,7 @@ const PROJECTS: Project[] = [
     image: "/projects/myalfa.jpg",
     tags: ["Next.js", "React", "Vercel"],
     demoLink: "https://www.myalfa.app/",
+    stores: [{ kind: "play", href: "https://play.google.com/store/apps/details?id=app.myalfa.link" }],
   },
   {
     title: "TransacTPE",
@@ -168,6 +171,7 @@ const PROJECTS: Project[] = [
     image: "/projects/tracklyst.jpg",
     tags: ["React Native", "Next.js", "Supabase"],
     demoLink: "https://tracklyst.51-79-207-57.sslip.io",
+    stores: [{ kind: "apk", href: "https://tracklyst.51-79-207-57.sslip.io/tracklyst.apk" }],
   },
   {
     title: "GMI",
@@ -653,7 +657,12 @@ export default function Home() {
     }
   };
 
-  const visibleProjects = filter === "all" ? PROJECTS : PROJECTS.filter((p) => p.cat === filter);
+  const visibleProjects =
+    filter === "all"
+      ? PROJECTS
+      : filter === "mobile"
+        ? PROJECTS.filter((p) => p.stores)
+        : PROJECTS.filter((p) => p.cat === filter);
 
   const aboutReveal = useReveal<HTMLDivElement>();
   const aboutTextReveal = useReveal<HTMLDivElement>(80);
@@ -1630,6 +1639,33 @@ export default function Home() {
                     >
                       {FILTER_CATS[lang].find((c) => c.key === p.cat)?.label ?? p.cat}
                     </span>
+                    {p.stores && (
+                      <span
+                        style={{
+                          position: "absolute",
+                          top: 12,
+                          right: 12,
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: 6,
+                          fontFamily: "var(--font-mono)",
+                          fontSize: 10.5,
+                          letterSpacing: ".08em",
+                          textTransform: "uppercase",
+                          color: "var(--accent2)",
+                          background: "var(--input-bg)",
+                          border: "1px solid var(--accent2)",
+                          padding: "5px 9px",
+                          borderRadius: 7,
+                        }}
+                      >
+                        <svg width="10" height="12" viewBox="0 0 10 14" fill="none" aria-hidden="true">
+                          <rect x="0.75" y="0.75" width="8.5" height="12.5" rx="2" stroke="currentColor" strokeWidth="1.5" />
+                          <circle cx="5" cy="10.5" r="0.9" fill="currentColor" />
+                        </svg>
+                        {t.projectMobileBadge}
+                      </span>
+                    )}
                   </div>
                   <div style={{ padding: 22, display: "flex", flexDirection: "column", gap: 14, flex: 1 }}>
                     <h3 style={{ margin: 0, fontSize: 18.5, fontWeight: 600, letterSpacing: "-.02em" }}>{p.title}</h3>
@@ -1657,7 +1693,9 @@ export default function Home() {
                     <div
                       style={{
                         display: "flex",
-                        gap: 18,
+                        flexWrap: "wrap",
+                        columnGap: 18,
+                        rowGap: 8,
                         paddingTop: 6,
                         borderTop: "1px solid var(--bd)",
                         marginTop: 4,
@@ -1676,6 +1714,19 @@ export default function Home() {
                           {t.projectGithub} <span style={{ fontFamily: "var(--font-mono)", color: "var(--tx5)" }}>↗</span>
                         </a>
                       )}
+                      {p.stores?.map((store) => (
+                        <a
+                          key={store.href}
+                          href={store.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="pf-project-link"
+                          style={{ display: "inline-flex", alignItems: "center", gap: 6, color: "var(--accent2)" }}
+                        >
+                          {store.kind === "play" ? t.projectGooglePlay : t.projectApk}{" "}
+                          <span style={{ fontFamily: "var(--font-mono)" }}>{store.kind === "apk" ? "↓" : "↗"}</span>
+                        </a>
+                      ))}
                       <a
                         href={p.demoLink}
                         target="_blank"
